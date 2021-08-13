@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sawariapatkalinsewa.R
+import com.example.sawariapatkalinsewa.api.ServiceBuilder
 import com.example.sawariapatkalinsewa.entity.Request
 
 
@@ -29,6 +30,7 @@ class ViewRequestAdapter (
         val tvlocationlat2: TextView
         val tvmechname: TextView
         val tvmechphone: TextView
+        val token: TextView
         val ivdelete: Button
         val btnupdatemap: Button
 
@@ -41,6 +43,7 @@ class ViewRequestAdapter (
             tvlocationlat1=view.findViewById(R.id.tvLat)
             tvlocationlat2=view.findViewById(R.id.tvLong)
             tvmechname=view.findViewById(R.id.tvmechname)
+            token=view.findViewById(R.id.tvToken)
             tvmechphone=view.findViewById(R.id.tvmechphone)
             ivdelete=view.findViewById(R.id.ivdelete)
             btnupdatemap=view.findViewById(R.id.btnupdatemap)
@@ -70,6 +73,7 @@ class ViewRequestAdapter (
         holder.tvlocationlat2.text = blst.long
         holder.tvmechname.text = mechanicName
         holder.tvmechphone.text = mechanicPhone
+        holder.token.text=ServiceBuilder.token
 
     }
 
