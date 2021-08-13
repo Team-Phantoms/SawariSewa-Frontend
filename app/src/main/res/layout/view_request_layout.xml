@@ -236,7 +236,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="44dp"
-                android:hint="Longitude"
+                android:hint="Mechanic ko name"
                 android:textColor="#000"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvLong"
@@ -252,7 +252,7 @@
                 android:layout_marginStart="44dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="19dp"
-                android:hint="Longitude"
+                android:hint="Number ho hai"
                 android:textColor="#000"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -287,6 +287,21 @@
                 android:textColor="#000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLong" />
+
+            <TextView
+                android:id="@+id/tvToken"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Token ho hai"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivdelete"
+                app:layout_constraintTop_toBottomOf="@+id/btnupdatemap" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
