@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.cuberto:liquid-swipe:1.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/00b650604f5ae0eca8e48f414c9daa22/jetified-liquid-swipe-1.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/00b650604f5ae0eca8e48f414c9daa22/jetified-liquid-swipe-1.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/00b650604f5ae0eca8e48f414c9daa22/jetified-liquid-swipe-1.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c0583e2401a25098cff82af8a0d8b39f/jetified-liquid-swipe-1.0.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c0583e2401a25098cff82af8a0d8b39f/jetified-liquid-swipe-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c0583e2401a25098cff82af8a0d8b39f/jetified-liquid-swipe-1.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

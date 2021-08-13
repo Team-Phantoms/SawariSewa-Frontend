@@ -208,7 +208,7 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
             // for ActivityCompat#requestPermissions for more details.
             return
         }
-        fusedLocationProviderClient!!.requestLocationUpdates(
+        fusedLocationProviderClient.requestLocationUpdates(
             locationRequest, locationCallback, Looper.myLooper()
         )
     }
@@ -282,8 +282,8 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
     }
 
     private fun getCityName(lat: Double, long: Double): String {
-        var cityName:String = ""
-        var countryName = ""
+        var cityName: String
+        var countryName: String
         var geoCoder = Geocoder(this, Locale.getDefault())
         val addresses: List<Address> = geoCoder.getFromLocation(lat, long, 1)
 

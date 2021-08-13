@@ -228,19 +228,50 @@
                 app:layout_constraintStart_toEndOf="@+id/tvlocationlat2"
                 app:layout_constraintTop_toBottomOf="@+id/tvLat" />
 
+            <TextView
+                android:id="@+id/tvmechname"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:hint="Longitude"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvLong"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvlocationlat2" />
+
+            <TextView
+                android:id="@+id/tvmechphone"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Longitude"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvmechname"
+                app:layout_constraintTop_toBottomOf="@+id/tvLong" />
 
             <Button
                 android:id="@+id/ivdelete"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="44dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="52dp"
                 android:layout_marginEnd="77dp"
                 android:layout_weight="1"
                 android:backgroundTint="#33cc33"
                 android:text="Confirm"
                 android:textColor="#000"
                 app:layout_constraintEnd_toStartOf="@+id/btnupdatemap"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvlocationlat2" />
 
@@ -248,16 +279,14 @@
                 android:id="@+id/btnupdatemap"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginTop="52dp"
+                android:layout_marginEnd="28dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/gradient"
                 android:text="Cancel"
                 android:textColor="#000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLong" />
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
