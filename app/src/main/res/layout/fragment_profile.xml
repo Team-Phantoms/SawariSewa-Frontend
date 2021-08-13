@@ -311,6 +311,15 @@ tools:context=".ui.gallery.ProfileFragment">
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="410dp"
+        android:text="Update"/>
+
 </RelativeLayout>
+
     </RelativeLayout>
 </ScrollView>
