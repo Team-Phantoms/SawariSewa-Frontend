@@ -20,7 +20,7 @@ allprojects {
         google()
         jcenter()
         def githubProperties = new Properties()
-        githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+//        githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
         repositories {
             maven {
                 name = "GitHubPackages"
