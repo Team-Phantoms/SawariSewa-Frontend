@@ -12,10 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.PopupMenu
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,16 +37,18 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileFragment: Fragment() {
+class ProfileFragment: Fragment(), View.OnClickListener {
     private lateinit var tv_name:TextView
-    private lateinit var tv_address:TextView
-    private lateinit var tv_phone:TextView
+    private lateinit var tv_address:EditText
+    private lateinit var tv_phone:EditText
     private lateinit var tv_email:TextView
-    private lateinit var tv_email2:TextView
-    private lateinit var tv_fname:TextView
-    private lateinit var tv_lname:TextView
+    private lateinit var tv_caddres:TextView
+    private lateinit var tv_email2:EditText
+    private lateinit var tv_fname:EditText
+    private lateinit var tv_lname:EditText
     private lateinit var imgview:ImageView
     private lateinit var update:TextView
+    private lateinit var btnForm:Button
     private var type: String = ""
 
 
@@ -63,6 +62,7 @@ class ProfileFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         tv_name=root.findViewById(R.id.tv_name)
         tv_address=root.findViewById(R.id.tv_address)
+        tv_caddres=root.findViewById(R.id.tv_caddres)
         tv_phone=root.findViewById(R.id.tv_phone)
         tv_email=root.findViewById(R.id.tv_email)
         tv_email2=root.findViewById(R.id.tv_email2)
@@ -70,6 +70,7 @@ class ProfileFragment: Fragment() {
         tv_lname=root.findViewById(R.id.tv_lname)
         imgview=root.findViewById(R.id.imgview)
         update=root.findViewById(R.id.update)
+        btnForm=root.findViewById(R.id.btnForm)
 
         getSharedPref()
         if (type=="Customer") {
@@ -78,28 +79,21 @@ class ProfileFragment: Fragment() {
         else if (type=="Mechanic"){
             getMProfile()
         }
-
         imgview.setOnClickListener{
             loadPopUpMenu()
         }
         update.setOnClickListener {
             uploadImage()
         }
-
-
+        tv_caddres.setOnClickListener(this)
         return root
     }
-
-
-
     private fun getSharedPref() {
         val sharedPref = context?.getSharedPreferences("LoginPref", AppCompatActivity.MODE_PRIVATE)
         if (sharedPref != null) {
             type = sharedPref.getString("type", "").toString()
         }
     }
-
-
     private fun getProfile(){
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -112,7 +106,6 @@ class ProfileFragment: Fragment() {
                             Log.d("Debug:", "Your data:" + listprofile[0])
                             tv_name.text=listprofile[0].clusername
                             tv_email.text=listprofile[0].clemail
-                            tv_email2.text=listprofile[0].clemail
                             tv_fname.setText("${listprofile[0].clfname}")
                             tv_lname.setText("${listprofile[0].cllname}")
 
@@ -121,15 +114,8 @@ class ProfileFragment: Fragment() {
                                         .load(imagePath)
                                         .fitCenter()
                                         .into(imgview)
-
-
-
                         }
-
-
                     }
-
-
                 }
 
             }catch (ex: Exception){
@@ -152,8 +138,6 @@ class ProfileFragment: Fragment() {
                             Log.d("Debug:", "Your data:" + listprofile[0])
                             tv_name.text=listprofile[0].mechusername
                             tv_email.text=listprofile[0].mechemail
-                            tv_email2.text=listprofile[0].mechaddress
-                            tv_phone.text=listprofile[0].mechPhone
                             tv_fname.setText("${listprofile[0].mechfname}")
                             tv_lname.setText("${listprofile[0].mechlname}")
 
@@ -162,15 +146,8 @@ class ProfileFragment: Fragment() {
 //                                .load(imagePath)
 //                                .fitCenter()
 //                                .into(imgview)
-
-
-
                         }
-
-
                     }
-
-
                 }
 
             }catch (ex: Exception){
@@ -291,6 +268,10 @@ class ProfileFragment: Fragment() {
                 }
             }
         }
+    }
+
+    override fun onClick(v: View?) {
+        TODO("Not yet implemented")
     }
 
 }

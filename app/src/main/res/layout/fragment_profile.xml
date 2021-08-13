@@ -21,19 +21,17 @@ tools:context=".ui.gallery.ProfileFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        >
-
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:id="@+id/imgview"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_margin="9dp"
+            android:background="@drawable/photo"
             android:adjustViewBounds="true"
             android:padding="3dp"
-            android:scaleType="fitXY"
-             />
+            android:scaleType="fitXY"/>
 
     </RelativeLayout>
 
@@ -105,11 +103,7 @@ tools:context=".ui.gallery.ProfileFragment">
                 android:text="Click to get \nAddress"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
-
-
-
         </LinearLayout>
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -138,11 +132,8 @@ tools:context=".ui.gallery.ProfileFragment">
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-
         </LinearLayout>
-
     </RelativeLayout>
-
 </LinearLayout>
 
 
@@ -172,9 +163,9 @@ tools:context=".ui.gallery.ProfileFragment">
                 android:textColor="@color/headings"
                 android:textSize="13sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:hint="your address"
@@ -200,9 +191,9 @@ tools:context=".ui.gallery.ProfileFragment">
                 android:textColor="@color/headings"
                 android:textSize="13sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_email2"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:hint="your email"
@@ -223,16 +214,15 @@ tools:context=".ui.gallery.ProfileFragment">
             android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phone"
                 android:textColor="@color/headings"
                 android:textSize="13sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="+977 123456789"
@@ -258,22 +248,22 @@ tools:context=".ui.gallery.ProfileFragment">
                 android:layout_height="wrap_content"
                 android:text="Firstname"
                 android:textColor="@color/headings"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_fname"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:text="asdha"
+                android:text="Joey"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="15dp"
-                android:background="@color/grey" />
+                android:background="@color/grey"/>
 
         </LinearLayout>
 
@@ -284,19 +274,18 @@ tools:context=".ui.gallery.ProfileFragment">
             android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="LastName"
                 android:textColor="@color/headings"
                 android:textSize="13sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_lname"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:text="facebook.com/joeytrib"
+                android:text="Tribiani"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -307,19 +296,18 @@ tools:context=".ui.gallery.ProfileFragment">
                 android:background="@color/grey" />
 
         </LinearLayout>
-
-
     </LinearLayout>
 
     <Button
-        android:layout_width="120dp"
+        android:id="@+id/btnForm"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="410dp"
-        android:text="Update"/>
+        android:backgroundTint="@color/gradient"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="475dp"
+        android:text="Update Profile"/>
 
 </RelativeLayout>
-
     </RelativeLayout>
 </ScrollView>

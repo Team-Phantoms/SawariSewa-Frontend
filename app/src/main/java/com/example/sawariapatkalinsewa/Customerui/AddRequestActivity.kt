@@ -39,11 +39,12 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var rplatenum: TextInputEditText
     private lateinit var etrAddress: TextInputEditText
     private lateinit var etrLocationLat: TextInputEditText
+    private lateinit var token: TextInputEditText
     private lateinit var etrLocationLong: TextInputEditText
     private lateinit var btnraddress:Button
     private lateinit var btnrequest:Button
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient //for address
+    lateinit var locationRequest: LocationRequest //for address
     val PERMISSION_ID = 1010
     var problem=""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,26 +59,27 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
         etrAddress = findViewById(R.id.etraddress)
         etrLocationLat = findViewById(R.id.etrLocationlat)
         etrLocationLong = findViewById(R.id.etrLocationlong)
+        token=findViewById(R.id.token)
         btnraddress=findViewById(R.id.btnraddress)
         btnrequest=findViewById(R.id.btnrequest)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this) //for location
 
         getRVehicle()
-        btnraddress.setOnClickListener(this)
+        btnraddress.setOnClickListener(this) //address for location
         btnrequest.setOnClickListener(this)
 
         tvproblemtype.setText(problem)
 
-    }
+        token.setText(ServiceBuilder.token)
 
+    }
     override fun onClick(v: View?) {
         when (v?.id){
-            R.id.btnraddress -> {
+            R.id.btnraddress -> { //for address
                 Log.d("Debug:", CheckPermission().toString())
                 Log.d("Debug:", isLocationEnabled().toString())
                 RequestPermission()
-
                 getLastLocation()
             }
             R.id.btnrequest -> {
