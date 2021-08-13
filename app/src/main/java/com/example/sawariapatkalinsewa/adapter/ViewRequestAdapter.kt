@@ -1,6 +1,7 @@
 package com.example.sawariapatkalinsewa.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sawariapatkalinsewa.R
+import com.example.sawariapatkalinsewa.api.ServiceBuilder
+import com.example.sawariapatkalinsewa.channel.NotificationData
+import com.example.sawariapatkalinsewa.channel.PushNotification
+import com.example.sawariapatkalinsewa.channel.RetrofitInstance
 import com.example.sawariapatkalinsewa.entity.Request
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-
+const val TOPIC = "/topics/myTopic2"
 class ViewRequestAdapter (
     val lstbusiness: MutableList<Request>,
     val context: Context,
@@ -29,6 +38,7 @@ class ViewRequestAdapter (
         val tvlocationlat2: TextView
         val tvmechname: TextView
         val tvmechphone: TextView
+        val token: TextView
         val ivdelete: Button
         val btnupdatemap: Button
 
@@ -41,6 +51,7 @@ class ViewRequestAdapter (
             tvlocationlat1=view.findViewById(R.id.tvLat)
             tvlocationlat2=view.findViewById(R.id.tvLong)
             tvmechname=view.findViewById(R.id.tvmechname)
+            token=view.findViewById(R.id.tvToken)
             tvmechphone=view.findViewById(R.id.tvmechphone)
             ivdelete=view.findViewById(R.id.ivdelete)
             btnupdatemap=view.findViewById(R.id.btnupdatemap)
@@ -70,9 +81,40 @@ class ViewRequestAdapter (
         holder.tvlocationlat2.text = blst.long
         holder.tvmechname.text = mechanicName
         holder.tvmechphone.text = mechanicPhone
+        holder.token.text=ServiceBuilder.token
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+        holder.ivdelete.setOnClickListener {
+            val title = holder.tvmechname.text.toString()
+            val message = holder.tvmechphone.text.toString()
+            val recipientToken = holder.token.text.toString()
+            if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
+                PushNotification(
+                    NotificationData(title, message),
+                    recipientToken
+                ).also {
+                    sendNotification(it)
+                }
+            }
+        }
 
     }
-
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful) {
+                Log.d("debug", "Response: hello")
+            } else {
+                try {
+                    Thread.sleep(2000)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("debug", e.toString())
+        }
+    }
     override fun getItemCount(): Int {
         return lstbusiness.size
     }
