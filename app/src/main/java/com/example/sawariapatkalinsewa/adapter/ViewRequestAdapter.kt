@@ -14,7 +14,9 @@ import com.example.sawariapatkalinsewa.entity.Request
 
 class ViewRequestAdapter (
     val lstbusiness: MutableList<Request>,
-    val context: Context
+    val context: Context,
+    var mechanicName:String,
+    var mechanicPhone:String,
 ) : RecyclerView.Adapter<ViewRequestAdapter.RequestViewHolder>(){
 
     class RequestViewHolder(view: View):RecyclerView.ViewHolder(view){
@@ -25,6 +27,8 @@ class ViewRequestAdapter (
         val tvlocationlong: TextView
         val tvlocationlat1: TextView
         val tvlocationlat2: TextView
+        val tvmechname: TextView
+        val tvmechphone: TextView
         val ivdelete: Button
         val btnupdatemap: Button
 
@@ -36,6 +40,8 @@ class ViewRequestAdapter (
             tvlocationlong= view.findViewById(R.id.tvAddress)
             tvlocationlat1=view.findViewById(R.id.tvLat)
             tvlocationlat2=view.findViewById(R.id.tvLong)
+            tvmechname=view.findViewById(R.id.tvmechname)
+            tvmechphone=view.findViewById(R.id.tvmechphone)
             ivdelete=view.findViewById(R.id.ivdelete)
             btnupdatemap=view.findViewById(R.id.btnupdatemap)
 
@@ -62,6 +68,8 @@ class ViewRequestAdapter (
         holder.tvlocationlong.text = blst.address
         holder.tvlocationlat1.text = blst.lat
         holder.tvlocationlat2.text = blst.long
+        holder.tvmechname.text = mechanicName
+        holder.tvmechphone.text = mechanicPhone
 
     }
 

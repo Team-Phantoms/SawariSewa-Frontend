@@ -15,11 +15,14 @@ import kotlinx.coroutines.withContext
 
 class ViewRequestActivity : AppCompatActivity() {
     private lateinit var recyclerview1: RecyclerView
+    var mechuser=""
+    var mechphone=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_request)
-
+        mechuser = intent.getStringExtra("mechname").toString()
+        mechphone = intent.getStringExtra("mechphone").toString()
         CoroutineScope(Dispatchers.IO).launch {
             recyclerview1=findViewById(R.id.recyclerView1)
             val repository= MechanicRepository()
@@ -27,7 +30,7 @@ class ViewRequestActivity : AppCompatActivity() {
             val listrequest=response.requestdata
             Log.d("requestdata", listrequest.toString())
             withContext(Dispatchers.Main){
-                val adapter = ViewRequestAdapter(listrequest,this@ViewRequestActivity)
+                val adapter = ViewRequestAdapter(listrequest,this@ViewRequestActivity,mechuser,mechphone)
                 recyclerview1.layoutManager = LinearLayoutManager(this@ViewRequestActivity)
                 recyclerview1.adapter=adapter
             }

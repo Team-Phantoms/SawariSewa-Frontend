@@ -7,8 +7,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -32,10 +34,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class MechDashboardActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private var mechname:String="";
+    private var mechphone:String="";
     private val permissions = arrayOf(
         android.Manifest.permission.CAMERA,
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -56,7 +61,7 @@ class MechDashboardActivity : AppCompatActivity() {
         logout.setOnClickListener{
             logOut()
         }
-
+        getMProfile()
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_mechfragment)
@@ -69,13 +74,50 @@ class MechDashboardActivity : AppCompatActivity() {
     }
 
     private fun viewRequest() {
-        startActivity(
-            Intent(
-                this, ViewRequestActivity::class.java
-            )
-        )
+        val intent=Intent(this, ViewRequestActivity::class.java)
+        intent.putExtra("mechname",mechname)
+        intent.putExtra("mechphone",mechphone)
+        startActivity(intent)
+        Log.d("Debug:", "Your data:" + mechname+mechphone)
     }
+    private fun getMProfile(){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val mechanicRepository = MechanicRepository()
+                val response = mechanicRepository.getMech()
+                if(response.success == true){
+                    val listprofile = response.profile
+                    if (listprofile != null) {
+                        withContext(Dispatchers.Main){
+                            Log.d("Debug:", "Your data:" + listprofile[0])
+                            mechname= listprofile[0].mechusername.toString()
+                            mechphone= listprofile[0].mechPhone.toString()
 
+
+//                            val imagePath = ServiceBuilder.loadImagePath() + listprofile[0].photo
+//                            Glide.with(this@ProfileFragment)
+//                                .load(imagePath)
+//                                .fitCenter()
+//                                .into(imgview)
+
+
+
+                        }
+
+
+                    }
+
+
+                }
+
+            }catch (ex: Exception){
+                withContext(Dispatchers.Main){
+                    Toast.makeText(this@MechDashboardActivity,
+                        "Error : ${ex.toString()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
     private fun logOut(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Logout")
