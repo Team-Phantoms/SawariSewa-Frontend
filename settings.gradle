@@ -1,0 +1,3 @@
+include ':saswear'
+include ':app'
+rootProject.name = "SawariApatkalinSewa"

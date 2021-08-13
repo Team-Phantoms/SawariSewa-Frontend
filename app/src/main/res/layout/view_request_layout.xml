@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardElevation="10dp"
+        app:contentPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvbusinessName"
+                android:layout_width="120dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:text="Problem Type"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvbname"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvbname"
+                android:layout_width="120dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:text="Problem Type"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvbusinessName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:hint="Vechile Brand"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvBrand"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvbusinessName" />
+
+            <TextView
+                android:id="@+id/tvBrand"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Vechile Brand"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvbname" />
+
+            <TextView
+                android:id="@+id/tvaddress"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:hint="Vechile Model"
+                android:inputType="textMultiLine"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvModel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+
+
+            <TextView
+                android:id="@+id/tvModel"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Vechile Model"
+                android:inputType="textMultiLine"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvaddress"
+                app:layout_constraintTop_toBottomOf="@+id/tvBrand" />
+
+            <TextView
+                android:id="@+id/tvlocationlat"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:hint="Plate Number"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvPlate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvaddress" />
+
+            <TextView
+                android:id="@+id/tvPlate"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Plate Number"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvlocationlat"
+                app:layout_constraintTop_toBottomOf="@+id/tvModel" />
+
+            <TextView
+                android:id="@+id/tvlocationlong"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:hint="Address"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvAddress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvlocationlat" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Address"
+                android:inputType="textMultiLine"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvlocationlong"
+                app:layout_constraintTop_toBottomOf="@+id/tvPlate" />
+
+            <TextView
+                android:id="@+id/tvlocationlat1"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:hint="Latitude"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvLat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvlocationlong" />
+
+            <TextView
+                android:id="@+id/tvLat"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Latitude"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvlocationlat1"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+
+            <TextView
+                android:id="@+id/tvlocationlat2"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:hint="Longitude"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvLong"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvlocationlat1" />
+            <TextView
+                android:id="@+id/tvLong"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="19dp"
+                android:hint="Longitude"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvlocationlat2"
+                app:layout_constraintTop_toBottomOf="@+id/tvLat" />
+
+
+            <Button
+                android:id="@+id/ivdelete"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="77dp"
+                android:layout_weight="1"
+                android:backgroundTint="#33cc33"
+                android:text="Confirm"
+                android:textColor="#000"
+                app:layout_constraintEnd_toStartOf="@+id/btnupdatemap"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvlocationlat2" />
+
+            <Button
+                android:id="@+id/btnupdatemap"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/gradient"
+                android:text="Cancel"
+                android:textColor="#000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLong" />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

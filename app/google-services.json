@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "501906396670",
+    "project_id": "sawarisewaapp",
+    "storage_bucket": "sawarisewaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501906396670:android:38550ad710eee9edbb9caf",
+        "android_client_info": {
+          "package_name": "com.example.sawariapatkalinsewa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501906396670-d2v6g3j95tppps4llg0e8nn34f6giqol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sawariapatkalinsewa",
+            "certificate_hash": "20ae9bc6fe1c45d2e7e7c00488c1c2b490e90d17"
+          }
+        },
+        {
+          "client_id": "501906396670-oev01338vhii7u2u31r1t1n6dmr90mh0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkOK9amu3WN2uTNYQzpKlGGyPw1V0ReMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501906396670-oev01338vhii7u2u31r1t1n6dmr90mh0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

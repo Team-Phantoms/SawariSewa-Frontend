@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_mechhome"
+    android:id="@+id/mech_navigation">
+
+    <fragment
+        android:id="@+id/nav_mechhome"
+        android:name="com.example.sawariapatkalinsewa.ui.mechhome.MechHomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_mechhome" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.sawariapatkalinsewa.ui.gallery.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+
+
+</navigation>

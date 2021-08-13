@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    android:background="#ADD8E6"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvbusinessName"
+        android:layout_width="156dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="154dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:hint="Phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvbusinessName" />
+    <TextView
+        android:id="@+id/tvaddress"
+        android:layout_width="154dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:hint="Address"
+        android:inputType="textMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+    <TextView
+        android:id="@+id/tvlocationlat"
+        android:layout_width="154dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:hint="Latitude"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvaddress" />
+
+    <TextView
+        android:id="@+id/tvlocationlong"
+        android:layout_width="154dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:hint="Longitude"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvlocationlat" />
+
+    <ImageView
+        android:id="@+id/ivupdatebusiness"
+        android:layout_width="67dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:src="@drawable/update"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.702"
+        app:layout_constraintStart_toEndOf="@+id/tvPhone"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivdelete"
+        android:layout_width="67dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="28dp"
+        android:layout_weight="1"
+        android:src="@drawable/delete"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.702"
+        app:layout_constraintStart_toEndOf="@+id/tvPhone"
+        app:layout_constraintTop_toBottomOf="@+id/ivupdatebusiness" />
+
+    <Button
+        android:id="@+id/btnupdatemap"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="UpdateMap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toEndOf="@+id/tvlocationlong"
+        app:layout_constraintTop_toBottomOf="@+id/ivdelete" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
