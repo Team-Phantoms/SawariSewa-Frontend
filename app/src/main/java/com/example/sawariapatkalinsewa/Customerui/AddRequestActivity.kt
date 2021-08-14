@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import com.example.sawariapatkalinsewa.R
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
+import com.example.sawariapatkalinsewa.channel.FirebaseService
 import com.example.sawariapatkalinsewa.entity.Business
 import com.example.sawariapatkalinsewa.entity.Request
 import com.example.sawariapatkalinsewa.repository.BusinessRepository
@@ -26,7 +27,9 @@ import com.example.sawariapatkalinsewa.repository.VehicleRepository
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +56,18 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_request)
+        FirebaseService.sharedPref=getSharedPreferences("sharedPref",Context.MODE_PRIVATE)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("debug", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val tokenres = task.result
+            token.setText(tokenres)
+        })
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         problem = intent.getStringExtra("problem").toString()
 
         tvproblemtype=findViewById(R.id.tvproblemtype)
@@ -73,17 +88,7 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
         btnrequest.setOnClickListener(this)
 
         tvproblemtype.setText(problem)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.d("debug", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
 
-            // Get new FCM registration token
-            val tokenres = task.result
-            token.setText("hello$tokenres")
-        })
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
     }
     override fun onClick(v: View?) {

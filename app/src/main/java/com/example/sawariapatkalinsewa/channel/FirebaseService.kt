@@ -13,6 +13,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.example.sawariapatkalinsewa.Customerui.AddRequestActivity
 import com.example.sawariapatkalinsewa.Customerui.DashBoardActivity
 import com.example.sawariapatkalinsewa.Customerui.ViewMechanicActivity
 import com.example.sawariapatkalinsewa.R
@@ -24,7 +25,22 @@ private const val CHANNEL_ID = "my_channel"
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class FirebaseService : FirebaseMessagingService() {
+    
+companion object{
+    var sharedPref:SharedPreferences?=null
+    var token:String?
+    get(){
+        return sharedPref?.getString("token","")
+    }
+    set(value){
+        sharedPref?.edit()?.putString("token",value)?.apply()
+    }
+}
 
+    override fun onNewToken(p0: String) {
+        super.onNewToken(p0)
+        token=p0
+    }
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 

@@ -84,6 +84,7 @@ class ViewRequestAdapter (
         holder.tvlocationlat2.text = blst.long
         holder.tvmechname.text = mechanicName
         holder.tvmechphone.text = mechanicPhone
+        holder.token.text=blst.token
 
 
 
