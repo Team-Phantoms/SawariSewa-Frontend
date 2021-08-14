@@ -24,7 +24,9 @@ import com.example.sawariapatkalinsewa.repository.BusinessRepository
 import com.example.sawariapatkalinsewa.repository.RequestMechRepository
 import com.example.sawariapatkalinsewa.repository.VehicleRepository
 import com.google.android.gms.location.*
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,6 +34,7 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.util.*
 
+const val TOPIC = "/topics/myTopic2"
 class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var tvproblemtype:TextInputEditText
     private lateinit var rvechbrand: TextInputEditText
@@ -70,11 +73,17 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
         btnrequest.setOnClickListener(this)
 
         tvproblemtype.setText(problem)
-var str=ServiceBuilder.token
-        var delimiter=" "
-        val parts= str?.split(delimiter)
-        Log.d("debug", "my token:$parts")
-        token.setText(parts?.get(1))
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("debug", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val tokenres = task.result
+            token.setText("hello$tokenres")
+        })
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
     }
     override fun onClick(v: View?) {
