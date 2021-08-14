@@ -14,9 +14,11 @@ data class Request (
     var address: String? = null,
     var lat:String?=null,
     var long:String?=null,
+    var token:String?=null,
     var clusername: String? = null)
     :Parcelable {
     constructor(parcel: Parcel) : this(
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -35,6 +37,7 @@ data class Request (
         parcel.writeString(address)
         parcel.writeString(lat)
         parcel.writeString(long)
+        parcel.writeString(token)
         parcel.writeString(clusername)
     }
 

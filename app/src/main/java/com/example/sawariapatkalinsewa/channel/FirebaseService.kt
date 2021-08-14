@@ -1,5 +1,6 @@
 package com.example.sawariapatkalinsewa.channel
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
@@ -13,6 +14,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.sawariapatkalinsewa.Customerui.DashBoardActivity
+import com.example.sawariapatkalinsewa.Customerui.ViewMechanicActivity
 import com.example.sawariapatkalinsewa.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -20,6 +22,7 @@ import kotlin.random.Random
 
 private const val CHANNEL_ID = "my_channel"
 
+@SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class FirebaseService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {

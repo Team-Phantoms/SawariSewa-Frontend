@@ -70,8 +70,11 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
         btnrequest.setOnClickListener(this)
 
         tvproblemtype.setText(problem)
-
-        token.setText(ServiceBuilder.token)
+var str=ServiceBuilder.token
+        var delimiter=" "
+        val parts= str?.split(delimiter)
+        Log.d("debug", "my token:$parts")
+        token.setText(parts?.get(1))
 
     }
     override fun onClick(v: View?) {
@@ -97,6 +100,7 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
             val address = etrAddress.text.toString()
             val lat=etrLocationLat.text.toString()
             val long=etrLocationLong.text.toString()
+            val token=token.text.toString()
 
             val request = Request(
                     problemtype = problemtype,
@@ -106,6 +110,7 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
                     address = address,
                     lat = lat,
                     long = long,
+                    token=token,
                     clusername = ServiceBuilder.username
 
 

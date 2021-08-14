@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sawariapatkalinsewa.R
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
@@ -20,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-const val TOPIC = "/topics/myTopic2"
+const val TOPIC = "myTopic2"
 class ViewRequestAdapter (
     val lstbusiness: MutableList<Request>,
     val context: Context,
@@ -55,7 +56,7 @@ class ViewRequestAdapter (
             tvmechphone=view.findViewById(R.id.tvmechphone)
             ivdelete=view.findViewById(R.id.ivdelete)
             btnupdatemap=view.findViewById(R.id.btnupdatemap)
-
+            FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         }
 
@@ -81,14 +82,16 @@ class ViewRequestAdapter (
         holder.tvlocationlat2.text = blst.long
         holder.tvmechname.text = mechanicName
         holder.tvmechphone.text = mechanicPhone
-        holder.token.text=ServiceBuilder.token
+        holder.token.text=blst.token
 
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+
         holder.ivdelete.setOnClickListener {
             val title = holder.tvmechname.text.toString()
             val message = holder.tvmechphone.text.toString()
             val recipientToken = holder.token.text.toString()
+
             if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
+                Toast.makeText(context, "hello$title", Toast.LENGTH_SHORT).show()
                 PushNotification(
                     NotificationData(title, message),
                     recipientToken
