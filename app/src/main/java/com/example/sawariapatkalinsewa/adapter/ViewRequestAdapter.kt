@@ -1,5 +1,6 @@
 package com.example.sawariapatkalinsewa.adapter
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.sawariapatkalinsewa.channel.NotificationData
 import com.example.sawariapatkalinsewa.channel.PushNotification
 import com.example.sawariapatkalinsewa.channel.RetrofitInstance
 import com.example.sawariapatkalinsewa.entity.Request
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +58,7 @@ class ViewRequestAdapter (
             tvmechphone=view.findViewById(R.id.tvmechphone)
             ivdelete=view.findViewById(R.id.ivdelete)
             btnupdatemap=view.findViewById(R.id.btnupdatemap)
-            FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+
 
         }
 
@@ -82,8 +84,18 @@ class ViewRequestAdapter (
         holder.tvlocationlat2.text = blst.long
         holder.tvmechname.text = mechanicName
         holder.tvmechphone.text = mechanicPhone
-        holder.token.text=blst.token
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("debug", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            holder.token.setText(token)
+        })
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         holder.ivdelete.setOnClickListener {
             val title = holder.tvmechname.text.toString()
