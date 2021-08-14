@@ -23,7 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-const val TOPIC = "myTopic2"
+
 class ViewRequestAdapter (
     val lstbusiness: MutableList<Request>,
     val context: Context,
@@ -85,17 +85,7 @@ class ViewRequestAdapter (
         holder.tvmechname.text = mechanicName
         holder.tvmechphone.text = mechanicPhone
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.d("debug", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
 
-            // Get new FCM registration token
-            val token = task.result
-            holder.token.setText(token)
-        })
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         holder.ivdelete.setOnClickListener {
             val title = holder.tvmechname.text.toString()
