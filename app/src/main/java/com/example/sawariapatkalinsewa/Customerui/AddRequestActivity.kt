@@ -151,7 +151,6 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
                 }
             }
     }
-
     fun getLastLocation(){
         if(CheckPermission()){
             if(isLocationEnabled()){
