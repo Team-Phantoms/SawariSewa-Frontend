@@ -18,11 +18,15 @@ import com.example.sawariapatkalinsewa.channel.NotificationData
 import com.example.sawariapatkalinsewa.channel.PushNotification
 import com.example.sawariapatkalinsewa.channel.RetrofitInstance
 import com.example.sawariapatkalinsewa.entity.Request
+import com.example.sawariapatkalinsewa.entity.workHistory
+import com.example.sawariapatkalinsewa.repository.RequestMechRepository
+import com.example.sawariapatkalinsewa.repository.workHistoryRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class ViewRequestAdapter (
@@ -90,12 +94,56 @@ class ViewRequestAdapter (
 
 
         holder.ivdelete.setOnClickListener {
+            //for notification
             val title = holder.tvmechname.text.toString()
             val message = holder.tvmechphone.text.toString()
             val recipientToken = holder.token.text.toString()
+            //for work history
+            val problemtype= holder.tvbusinessName.text.toString()
+            val address = holder.tvaddress.text.toString()
+            val lat= holder.tvlocationlat.text.toString()
+            val long= holder.tvlocationlat2.text.toString()
+            val mechusername = holder.tvmechname.text.toString()
+            val mechphone = holder.tvmechphone.text.toString()
+            val clusername=blst.clusername.toString()
+
+            val workHistory = workHistory(
+                    problemtype = problemtype,
+                    address = address,
+                    lat = lat,
+                    long = long,
+                    clusername = clusername,
+                    mechusername=mechusername,
+                    mechphone = mechphone,
+                    accepted = "true",
+                    rejected = "false"
+
+
+            )
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                   val workHistoryRepository=workHistoryRepository()
+                    val response =  workHistoryRepository.insertWork(workHistory)
+                    if(response.success == true){
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                    context,
+                                    "Added", Toast.LENGTH_SHORT
+                            ).show()
+                            lstbusiness.remove(blst)
+                            notifyDataSetChanged()
+                        }
+                    }
+                } catch (ex: java.lang.Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context,
+                                ex.toString(), Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
 
             if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
-                Toast.makeText(context, "hello$title", Toast.LENGTH_SHORT).show()
                 PushNotification(
                     NotificationData(title, message),
                     recipientToken
@@ -104,6 +152,69 @@ class ViewRequestAdapter (
                 }
             }
         }
+
+        holder.btnupdatemap.setOnClickListener {
+            //for notification
+            val title = holder.tvmechname.text.toString()
+            val message = "Oops! Wait for another mech response"
+            val recipientToken = holder.token.text.toString()
+
+            if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
+                PushNotification(
+                        NotificationData(title, message),
+                        recipientToken
+                ).also {
+                    sendNotification(it)
+                }
+            }
+            //for work history
+            val problemtype= holder.tvbusinessName.text.toString()
+            val address = holder.tvaddress.text.toString()
+            val lat= holder.tvlocationlat.text.toString()
+            val long= holder.tvlocationlat2.text.toString()
+            val mechusername = holder.tvmechname.text.toString()
+            val mechphone = holder.tvmechphone.text.toString()
+            val clusername=blst.clusername.toString()
+
+            val workHistory = workHistory(
+                    problemtype = problemtype,
+                    address = address,
+                    lat = lat,
+                    long = long,
+                    clusername = clusername,
+                    mechusername=mechusername,
+                    mechphone = mechphone,
+                    accepted = "false",
+                    rejected = "true"
+
+
+            )
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val workHistoryRepository=workHistoryRepository()
+                    val response =  workHistoryRepository.insertWork(workHistory)
+                    if(response.success == true){
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                    context,
+                                    "Canceled", Toast.LENGTH_SHORT
+                            ).show()
+                            lstbusiness.remove(blst)
+                            notifyDataSetChanged()
+                        }
+                    }
+                } catch (ex: java.lang.Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context,
+                                ex.toString(), Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+
+
+        }
+
 
     }
     private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
@@ -122,6 +233,8 @@ class ViewRequestAdapter (
             Log.e("debug", e.toString())
         }
     }
+
+
     override fun getItemCount(): Int {
         return lstbusiness.size
     }
