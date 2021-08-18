@@ -1,6 +1,5 @@
 package com.example.sawariapatkalinsewa.channel
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
@@ -13,22 +12,38 @@ import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.example.sawariapatkalinsewa.Customerui.AddRequestActivity
 import com.example.sawariapatkalinsewa.Customerui.DashBoardActivity
-import com.example.sawariapatkalinsewa.Customerui.ViewMechanicActivity
 import com.example.sawariapatkalinsewa.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlin.random.Random
 
-private const val CHANNEL_ID = "my_channel"
 
-@SuppressLint("MissingFirebaseInstanceTokenRefresh")
+private var channelId:String=""
 class FirebaseService : FirebaseMessagingService() {
+
+    companion object {
+        var sharedPref: SharedPreferences? = null
+
+        var token: String?
+        get() {
+            return sharedPref?.getString("token", "")
+        }
+        set(value) {
+            sharedPref?.edit()?.putString("token", value)?.apply()
+        }
+    }
+
+    override fun onNewToken(newToken: String) {
+        super.onNewToken(newToken)
+        token = newToken
+    }
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        val intent = Intent(this, DashBoardActivity::class.java)
+        val intent = Intent(this, AddRequestActivity::class.java)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
@@ -37,8 +52,9 @@ class FirebaseService : FirebaseMessagingService() {
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+         channelId = getString(R.string.default_notification_channel_id)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle(message.data["title"])
             .setContentText(message.data["message"])
             .setSmallIcon(R.drawable.ic_android_black_24dp)
@@ -51,8 +67,9 @@ class FirebaseService : FirebaseMessagingService() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManager: NotificationManager) {
-        val channelName = "channelName"
-        val channel = NotificationChannel(CHANNEL_ID, channelName, IMPORTANCE_HIGH).apply {
+        channelId = getString(R.string.default_notification_channel_id)
+        val channelName = getString(R.string.default_notification_channel_name)
+        val channel = NotificationChannel(channelId, channelName, IMPORTANCE_HIGH).apply {
             description = "My channel description"
             enableLights(true)
             lightColor = Color.GREEN

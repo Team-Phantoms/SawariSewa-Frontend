@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,8 +26,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.sawariapatkalinsewa.Customerui.ViewMechanicActivity
 import com.example.sawariapatkalinsewa.LoginActivity
 import com.example.sawariapatkalinsewa.R
-import com.example.sawariapatkalinsewa.channel.NotificationChannels
-import com.example.sawariapatkalinsewa.repository.CustomerRepository
 import com.example.sawariapatkalinsewa.repository.MechanicRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +53,7 @@ class MechDashboardActivity : AppCompatActivity() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             viewRequest()
-            showHighPriorityNotification()
+//            showHighPriorityNotification()
         }
         logout.setOnClickListener{
             logOut()
@@ -168,21 +165,21 @@ class MechDashboardActivity : AppCompatActivity() {
         }
         return hasPermission
     }
-    private fun showHighPriorityNotification() {
-        val notificationManager= NotificationManagerCompat.from(this)
-
-        val notificationChannels= NotificationChannels(this)
-        notificationChannels.createNotificationChannels()
-
-        val notification= NotificationCompat.Builder(this,notificationChannels.CHANNEL_1)
-            .setSmallIcon(R.drawable.notification)
-            .setContentTitle("Mechanic")
-            .setContentText("You searched for mechanic")
-            .setColor(Color.BLACK)
-            .build()
-
-        notificationManager.notify(1,notification)
-    }
+//    private fun showHighPriorityNotification() {
+//        val notificationManager= NotificationManagerCompat.from(this)
+//
+//        val notificationChannels= NotificationChannels(this)
+//        notificationChannels.createNotificationChannels()
+//
+//        val notification= NotificationCompat.Builder(this,notificationChannels.CHANNEL_1)
+//            .setSmallIcon(R.drawable.notification)
+//            .setContentTitle("Mechanic")
+//            .setContentText("You searched for mechanic")
+//            .setColor(Color.BLACK)
+//            .build()
+//
+//        notificationManager.notify(1,notification)
+//    }
     private fun viewMechanic(){
         startActivity(
             Intent(

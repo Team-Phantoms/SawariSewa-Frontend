@@ -4,17 +4,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -30,15 +21,13 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.sawariapatkalinsewa.LoginActivity
 import com.example.sawariapatkalinsewa.R
-import com.example.sawariapatkalinsewa.channel.NotificationChannels
-import com.example.sawariapatkalinsewa.repository.BusinessRepository
 import com.example.sawariapatkalinsewa.repository.CustomerRepository
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.log
 
 class DashBoardActivity : AppCompatActivity() {
 
@@ -57,12 +46,12 @@ class DashBoardActivity : AppCompatActivity() {
 
         val logout:ImageView=findViewById(R.id.ivlogout)
         setSupportActionBar(toolbar)
-
+        FirebaseMessaging.getInstance().isAutoInitEnabled=true
         val fab: FloatingActionButton = findViewById(R.id.fab)
         checkRunTimePermission()
         fab.setOnClickListener { view ->
             viewMechanic()
-            showHighPriorityNotification()
+//            showHighPriorityNotification()
         }
 
         logout.setOnClickListener{
@@ -132,21 +121,21 @@ class DashBoardActivity : AppCompatActivity() {
         }
         return hasPermission
     }
-    private fun showHighPriorityNotification() {
-        val notificationManager= NotificationManagerCompat.from(this)
-
-        val notificationChannels= NotificationChannels(this)
-        notificationChannels.createNotificationChannels()
-
-        val notification= NotificationCompat.Builder(this,notificationChannels.CHANNEL_1)
-            .setSmallIcon(R.drawable.notification)
-            .setContentTitle("Mechanic")
-            .setContentText("You searched for mechanic")
-            .setColor(Color.BLACK)
-            .build()
-
-        notificationManager.notify(1,notification)
-    }
+//    private fun showHighPriorityNotification() {
+//        val notificationManager= NotificationManagerCompat.from(this)
+//
+//        val notificationChannels= NotificationChannels(this)
+//        notificationChannels.createNotificationChannels()
+//
+//        val notification= NotificationCompat.Builder(this,notificationChannels.CHANNEL_1)
+//            .setSmallIcon(R.drawable.notification)
+//            .setContentTitle("Mechanic")
+//            .setContentText("You searched for mechanic")
+//            .setColor(Color.BLACK)
+//            .build()
+//
+//        notificationManager.notify(1,notification)
+//    }
     private fun viewMechanic(){
         startActivity(
             Intent(

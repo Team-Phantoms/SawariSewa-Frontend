@@ -1,12 +1,15 @@
 package com.example.sawariapatkalinsewa.Customerui
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
@@ -55,6 +58,18 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
         setContentView(R.layout.activity_add_request)
         problem = intent.getStringExtra("problem").toString()
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            val channelId = getString(R.string.default_notification_channel_id)
+            val channelName = getString(R.string.default_notification_channel_name)
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager?.createNotificationChannel(
+                NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_LOW)
+            )
+        }
+
+
         tvproblemtype=findViewById(R.id.tvproblemtype)
         rvechbrand = findViewById(R.id.rvechbrand)
         rvechmodel = findViewById(R.id.rvechmodel)
@@ -81,9 +96,12 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
 
             // Get new FCM registration token
             val tokenres = task.result
-            token.setText("hello$tokenres")
+            token.setText(tokenres)
+            Log.d("debug","token $tokenres")
         })
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+
+
 
     }
     override fun onClick(v: View?) {

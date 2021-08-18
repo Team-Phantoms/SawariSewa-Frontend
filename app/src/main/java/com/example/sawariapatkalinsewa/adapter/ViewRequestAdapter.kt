@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+
 import com.example.sawariapatkalinsewa.R
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
 import com.example.sawariapatkalinsewa.channel.NotificationData
@@ -84,6 +85,7 @@ class ViewRequestAdapter (
         holder.tvlocationlat2.text = blst.long
         holder.tvmechname.text = mechanicName
         holder.tvmechphone.text = mechanicPhone
+        holder.token.text=blst.token
 
 
 

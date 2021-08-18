@@ -2,7 +2,6 @@ package com.example.sawariapatkalinsewa.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.sawariapatkalinsewa.channel.NotificationChannels
 import com.example.sawariapatkalinsewa.R
 import com.example.sawariapatkalinsewa.entity.Mechanic
 import com.example.sawariapatkalinsewa.entity.client
@@ -24,7 +22,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.log
 
 @Suppress("IMPLICIT_BOXING_IN_IDENTITY_EQUALS")
 class   SignupTabFragment: Fragment() {
@@ -138,7 +135,7 @@ class   SignupTabFragment: Fragment() {
                            val response=customerRepository.registerCustomer(client)
                            if (response.success==true){
                                withContext(Dispatchers.Main) {
-                                   showHighPriorityNotification()
+//                                   showHighPriorityNotification()
                                    val snack = Snackbar.make(view, "Registration Succesfull go to Login tab", Snackbar.LENGTH_LONG)
                                    snack.show()
                                }
@@ -146,7 +143,7 @@ class   SignupTabFragment: Fragment() {
                        }
                            catch (ex: Exception) {
                                withContext(Dispatchers.Main) {
-                                   showHighPriorityNotification()
+//                                   showHighPriorityNotification()
                                    val snack = Snackbar.make(view, "Registration Succesfull go to Login tab", Snackbar.LENGTH_LONG)
                                    snack.show()
                                }
@@ -189,7 +186,7 @@ class   SignupTabFragment: Fragment() {
                             if (response.success == true) {
 
                                 withContext(Dispatchers.Main) {
-                                    showHighPriorityNotification()
+//                                    showHighPriorityNotification()
                                     val snack = Snackbar.make(view, "Registration Succesfull go to Login tab", Snackbar.LENGTH_LONG)
                                     snack.show()
                                 }
@@ -214,30 +211,30 @@ class   SignupTabFragment: Fragment() {
 
     }
 
-    private fun showHighPriorityNotification() {
-        val notificationManager= context?.let { NotificationManagerCompat.from(it) }
-
-        val notificationChannels= context?.let { NotificationChannels(it) }
-        if (notificationChannels != null) {
-            notificationChannels.createNotificationChannels()
-        }
-
-        val notification= context?.let {
-            notificationChannels?.let { it1 ->
-                NotificationCompat.Builder(it, it1.CHANNEL_1)
-                    .setSmallIcon(R.drawable.notification)
-                    .setContentTitle("Account")
-                    .setContentText(" $sel Account created  now you can login")
-                    .setColor(Color.BLACK)
-                    .build()
-            }
-        }
-
-        if (notification != null) {
-            if (notificationManager != null) {
-                notificationManager.notify(1,notification)
-            }
-        }
-    }
+//    private fun showHighPriorityNotification() {
+//        val notificationManager= context?.let { NotificationManagerCompat.from(it) }
+//
+//        val notificationChannels= context?.let { NotificationChannels(it) }
+//        if (notificationChannels != null) {
+//            notificationChannels.createNotificationChannels()
+//        }
+//
+//        val notification= context?.let {
+//            notificationChannels?.let { it1 ->
+//                NotificationCompat.Builder(it, it1.CHANNEL_1)
+//                    .setSmallIcon(R.drawable.notification)
+//                    .setContentTitle("Account")
+//                    .setContentText(" $sel Account created  now you can login")
+//                    .setColor(Color.BLACK)
+//                    .build()
+//            }
+//        }
+//
+//        if (notification != null) {
+//            if (notificationManager != null) {
+//                notificationManager.notify(1,notification)
+//            }
+//        }
+//    }
 
 }
