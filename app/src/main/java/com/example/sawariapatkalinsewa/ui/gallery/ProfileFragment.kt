@@ -1,12 +1,20 @@
 package com.example.sawariapatkalinsewa.ui.gallery
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
+import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.Image
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Environment
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,15 +22,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.sawariapatkalinsewa.R
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
-import com.example.sawariapatkalinsewa.entity.client
 import com.example.sawariapatkalinsewa.repository.CustomerRepository
 import com.example.sawariapatkalinsewa.repository.MechanicRepository
-import de.hdodenhof.circleimageview.CircleImageView
+import com.google.android.gms.location.*
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,13 +41,12 @@ import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ProfileFragment: Fragment(), View.OnClickListener {
     private lateinit var tv_name:TextView
-    private lateinit var tv_address:EditText
+    private lateinit var tv_address: TextInputEditText
     private lateinit var tv_phone:EditText
     private lateinit var tv_email:TextView
     private lateinit var tv_caddres:TextView
@@ -50,13 +57,17 @@ class ProfileFragment: Fragment(), View.OnClickListener {
     private lateinit var update:TextView
     private lateinit var btnForm:Button
     private var type: String = ""
+    val PERMISSION_ID = 1010
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient //for address
+    lateinit var locationRequest: LocationRequest //for address
+    lateinit var locationManager: LocationManager
 
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
@@ -71,6 +82,9 @@ class ProfileFragment: Fragment(), View.OnClickListener {
         imgview=root.findViewById(R.id.imgview)
         update=root.findViewById(R.id.update)
         btnForm=root.findViewById(R.id.btnForm)
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext()) //for location
+
 
         getSharedPref()
         if (type=="Customer") {
@@ -153,7 +167,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
             }catch (ex: Exception){
                 withContext(Dispatchers.Main){
                     Toast.makeText(context,
-                        "Error : ${ex.toString()}", Toast.LENGTH_SHORT).show()
+                            "Error : ${ex.toString()}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -186,7 +200,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
 
     private fun openCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(cameraIntent,REQUEST_CAMERA_CODE)
+        startActivityForResult(cameraIntent, REQUEST_CAMERA_CODE)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -243,7 +257,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
         if (imageUrl != null) {
             val file = File(imageUrl!!)
             val reqFile =
-                    RequestBody.create(MediaType.parse("image/"+file.extension.toLowerCase().replace("jpg","jpeg")), file)
+                    RequestBody.create(MediaType.parse("image/" + file.extension.toLowerCase().replace("jpg", "jpeg")), file)
             val body =
                     MultipartBody.Part.createFormData("photo", file.name, reqFile)
             CoroutineScope(Dispatchers.IO).launch {
@@ -271,7 +285,184 @@ class ProfileFragment: Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+        when (v?.id){
+            R.id.tv_caddres -> { //for address
+                Log.d("Debug:", CheckPermission().toString())
+                Log.d("Debug:", isLocationEnabled().toString())
+                RequestPermission()
+                getLastLocation()
+            }
+        }
     }
 
+    private fun getLastLocation() {
+        if(CheckPermission()){
+            if(isLocationEnabled()){
+                if (context?.let {
+                            ActivityCompat.checkSelfPermission(
+                                    it,
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                            )
+                        } != PackageManager.PERMISSION_GRANTED && context?.let {
+                            ActivityCompat.checkSelfPermission(
+                                    it,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION
+                            )
+                        } != PackageManager.PERMISSION_GRANTED
+                ) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return
+                }
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
+                    var location: Location? = task.result
+                    if(location == null){
+                        NewLocationData()
+                    }else{
+                        val geocoder: Geocoder
+                        val addresses: List<Address>
+                        geocoder = Geocoder(context, Locale.getDefault())
+
+                        addresses = geocoder.getFromLocation(
+                                location.latitude,
+                                location.longitude,
+                                1
+                        ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+                        val address =
+                                addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+                        Log.d("Debug:", "Your Location:" + location.longitude)
+                        tv_address.setText(
+                                address
+                        )
+//                        etrLocationLong.setText(" ${location.longitude}  ")
+//                        etrLocationLat.setText(" ${location.latitude}  ")
+                    }
+                }
+            }else{
+               Toast.makeText(context, "Please Turn on Your device Location", Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            RequestPermission()
+        }
+    }
+
+    private fun NewLocationData() {
+        locationRequest =  LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 1
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext()) //for location
+        if (context?.let {
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                } != PackageManager.PERMISSION_GRANTED && context?.let {
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                } != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationProviderClient.requestLocationUpdates(
+                locationRequest, locationCallback, Looper.myLooper()
+        )
+    }
+    private val locationCallback = object : LocationCallback(){
+        override fun onLocationResult(locationResult: LocationResult) {
+            var lastLocation: Location = locationResult.lastLocation
+            Log.d("Debug:", "your last last location: " + lastLocation.longitude.toString())
+            tv_address.setText(
+                    getCityName(
+                            lastLocation.latitude,
+                            lastLocation.longitude
+                    )
+            )
+//            etrLocationLong.setText(" ${lastLocation.longitude}  ")
+//            etrLocationLat.setText(" ${lastLocation.latitude}  ")
+        }
+    }
+
+    private fun getCityName(lat: Double, long: Double): String {
+        var cityName: String
+        var countryName: String
+        var geoCoder = Geocoder(context, Locale.getDefault())
+        val addresses: List<Address> = geoCoder.getFromLocation(lat, long, 1)
+
+        cityName = addresses.get(0).locality
+        countryName = addresses.get(0).countryName
+        Log.d("Debug:", "Your City: " + cityName + " ; your Country " + countryName)
+        return cityName
+
+    }
+
+    private fun RequestPermission() {
+        //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
+        ActivityCompat.requestPermissions(
+                context as Activity,
+                arrayOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ),
+                PERMISSION_ID
+        )
+    }
+
+    private fun CheckPermission(): Boolean {
+        //this function will return a boolean
+        //true: if we have permission
+        //false if not
+        if(
+                context?.let {
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                } == PackageManager.PERMISSION_GRANTED ||
+                context?.let {
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                } == PackageManager.PERMISSION_GRANTED
+        ){
+            return true
+        }
+
+        return false
+
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        //this function will return to us the state of the location service
+        //if the gps or the network provider is enabled then it will return true otherwise it will return false
+        locationManager= (requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager)!!
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        )
+
+    }
+
+
 }
+
+
+
+
