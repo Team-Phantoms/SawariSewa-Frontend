@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.sawariapatkalinsewa.R
 
-class BluebookActivity : AppCompatActivity() {
+class SomethingElseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bluebook)
+        setContentView(R.layout.activity_something_else)
     }
 }

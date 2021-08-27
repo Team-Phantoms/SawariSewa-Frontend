@@ -15,21 +15,16 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import com.example.sawariapatkalinsewa.R
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
 import com.example.sawariapatkalinsewa.channel.FirebaseService
-import com.example.sawariapatkalinsewa.entity.Business
 import com.example.sawariapatkalinsewa.entity.Request
-import com.example.sawariapatkalinsewa.repository.BusinessRepository
 import com.example.sawariapatkalinsewa.repository.RequestMechRepository
 import com.example.sawariapatkalinsewa.repository.VehicleRepository
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,7 +62,7 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
             val tokenres = task.result
             token.setText(tokenres)
         })
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+        FirebaseMessaging.getInstance().subscribeToTopic(com.example.sawariapatkalinsewa.Customerui.TOPIC)
         problem = intent.getStringExtra("problem").toString()
 
         tvproblemtype=findViewById(R.id.tvproblemtype)
