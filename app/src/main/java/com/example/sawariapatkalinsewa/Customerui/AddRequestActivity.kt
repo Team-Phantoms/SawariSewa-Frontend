@@ -13,8 +13,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -38,7 +36,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.util.*
-import java.util.regex.Pattern
 
 const val TOPIC = "/topics/myTopic2"
 class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
@@ -50,7 +47,6 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var etrLocationLat: TextInputEditText
     private lateinit var token: TextInputEditText
     private lateinit var etrLocationLong: TextInputEditText
-    private lateinit var contact: TextInputEditText
     private lateinit var btnraddress:Button
     private lateinit var btnrequest:Button
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient //for address
@@ -81,32 +77,9 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
         etrAddress = findViewById(R.id.etraddress)
         etrLocationLat = findViewById(R.id.etrLocationlat)
         etrLocationLong = findViewById(R.id.etrLocationlong)
-        contact = findViewById(R.id.contact)
         token=findViewById(R.id.token)
         btnraddress=findViewById(R.id.btnraddress)
         btnrequest=findViewById(R.id.btnrequest)
-        contact.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (mobileValidate(contact.text.toString()))
-                {
-                    btnrequest.isEnabled=true
-                }
-                else{
-                    btnrequest.isEnabled=false
-                    contact.setError("Invalid Phone")
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-        })
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this) //for location
 
@@ -155,7 +128,6 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
             val lat=etrLocationLat.text.toString()
             val long=etrLocationLong.text.toString()
             val token=token.text.toString()
-            val contact=contact.text.toString()
 
             val request = Request(
                     problemtype = problemtype,
@@ -166,8 +138,7 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
                     lat = lat,
                     long = long,
                     token=token,
-                    clusername = ServiceBuilder.username,
-                    contact=contact
+                    clusername = ServiceBuilder.username
 
 
             )
@@ -193,11 +164,7 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
                 }
             }
     }
-    private fun mobileValidate(text: String): Boolean {
-        val p= Pattern.compile("[0-9][0-9]{9}")
-        var m =p.matcher(text)
-        return m.matches()
-    }
+
     fun getLastLocation(){
         if(CheckPermission()){
             if(isLocationEnabled()){
@@ -341,7 +308,6 @@ class AddRequestActivity : AppCompatActivity(),View.OnClickListener {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == PERMISSION_ID){
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 Log.d("Debug:", "You have the Permission")

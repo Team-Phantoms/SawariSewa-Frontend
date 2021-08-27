@@ -14,7 +14,6 @@ data class workHistory  (
         var mechphone:String?=null,
         var accepted:String?=null,
         var rejected:String?=null,
-        var contact:String?=null,
 ):Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -26,9 +25,7 @@ data class workHistory  (
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString(),
-            parcel.readString()
-    ) {
+            parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -42,7 +39,6 @@ data class workHistory  (
         parcel.writeString(mechphone)
         parcel.writeString(accepted)
         parcel.writeString(rejected)
-        parcel.writeString(contact)
     }
 
     override fun describeContents(): Int {

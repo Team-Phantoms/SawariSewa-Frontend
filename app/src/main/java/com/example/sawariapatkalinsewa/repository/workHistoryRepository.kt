@@ -20,6 +20,13 @@ class workHistoryRepository:MyApiRequest() {
         }
     }
 
+    suspend fun getDriver(): workHistoryResponse {
+        return apiRequest {
+            workHistoryAPI.getDriver(
+                    ServiceBuilder.token!!
+            )
+        }
+    }
 
     suspend fun getWork(): workHistoryResponse {
         return apiRequest {

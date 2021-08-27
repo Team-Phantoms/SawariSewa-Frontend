@@ -10,11 +10,10 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.sawariapatkalinsewa.Mechanicui.*
+import com.example.sawariapatkalinsewa.Mechanicui.AddBusinessActivity
 import com.example.sawariapatkalinsewa.R
-import com.example.sawariapatkalinsewa.adapter.HistoryAdapter
-import com.example.sawariapatkalinsewa.adapter.MechHistoryAdapter
+import com.example.sawariapatkalinsewa.Mechanicui.ViewBusinessActivity
+import com.example.sawariapatkalinsewa.Mechanicui.ViewFeedBackActivity
 import com.example.sawariapatkalinsewa.adapter.ViewRequestAdapter
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
 import com.example.sawariapatkalinsewa.repository.MechanicRepository
@@ -31,8 +30,6 @@ class MechHomeFragment : Fragment() {
  lateinit var user:TextView
  lateinit var feedback:CardView
  lateinit var workHistory:CardView
- lateinit var acceptedwork:CardView
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,7 +42,6 @@ class MechHomeFragment : Fragment() {
         feedback=root.findViewById(R.id.cvfeedback)
         user=root.findViewById(R.id.username)
         workHistory=root.findViewById(R.id.cvworkhistory)
-        acceptedwork=root.findViewById(R.id.cvacceptedwork)
 
         user.text="Welcome ${ServiceBuilder.username}"
 
@@ -73,21 +69,13 @@ class MechHomeFragment : Fragment() {
                 )
             )
         }
-        acceptedwork.setOnClickListener{
-
-            startActivity(
-                    Intent(
-                            context, MechWorkActivity::class.java
-                    )
-            )
-        }
         workHistory.setOnClickListener{
-
-            startActivity(
-                Intent(
-                    context, MechWorkHistoryActivity::class.java
-                )
-            )
+            CoroutineScope(Dispatchers.IO).launch {
+                val repository= workHistoryRepository()
+                val response=repository.getWork()
+                val listrequest=response.wdata
+                Log.d("requestdata", listrequest.toString())
+            }
         }
 
         return root

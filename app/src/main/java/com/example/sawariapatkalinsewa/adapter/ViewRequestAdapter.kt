@@ -18,11 +18,8 @@ import com.example.sawariapatkalinsewa.channel.NotificationData
 import com.example.sawariapatkalinsewa.channel.PushNotification
 import com.example.sawariapatkalinsewa.channel.RetrofitInstance
 import com.example.sawariapatkalinsewa.entity.Request
-import com.example.sawariapatkalinsewa.entity.clientWorkHistory
 import com.example.sawariapatkalinsewa.entity.workHistory
-import com.example.sawariapatkalinsewa.repository.BusinessRepository
 import com.example.sawariapatkalinsewa.repository.RequestMechRepository
-import com.example.sawariapatkalinsewa.repository.clientworkHistoryRepository
 import com.example.sawariapatkalinsewa.repository.workHistoryRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -95,29 +92,20 @@ class ViewRequestAdapter (
         holder.token.text=blst.token
 
 
+
         holder.ivdelete.setOnClickListener {
             //for notification
             val title = holder.tvmechname.text.toString()
             val message = holder.tvmechphone.text.toString()
             val recipientToken = holder.token.text.toString()
-
-            if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
-                PushNotification(
-                        NotificationData(title, message),
-                        recipientToken
-                ).also {
-                    sendNotification(it)
-                }
-            }
             //for work history
             val problemtype= holder.tvbusinessName.text.toString()
             val address = holder.tvaddress.text.toString()
-            val lat= holder.tvlocationlat1.text.toString()
+            val lat= holder.tvlocationlat.text.toString()
             val long= holder.tvlocationlat2.text.toString()
             val mechusername = holder.tvmechname.text.toString()
             val mechphone = holder.tvmechphone.text.toString()
             val clusername=blst.clusername.toString()
-            val contact=blst.contact.toString()
 
             val workHistory = workHistory(
                     problemtype = problemtype,
@@ -128,22 +116,7 @@ class ViewRequestAdapter (
                     mechusername=mechusername,
                     mechphone = mechphone,
                     accepted = "true",
-                    rejected = "false",
-                    contact = contact
-
-
-            )
-            val clientWorkHistory = clientWorkHistory(
-                problemtype = problemtype,
-                address = address,
-                lat = lat,
-                long = long,
-                clusername = clusername,
-                mechusername=mechusername,
-                mechphone = mechphone,
-                accepted = "true",
-                rejected = "false",
-                contact = contact
+                    rejected = "false"
 
 
             )
@@ -157,34 +130,8 @@ class ViewRequestAdapter (
                                     context,
                                     "Added", Toast.LENGTH_SHORT
                             ).show()
-                            CoroutineScope(Dispatchers.IO).launch {
-                                try {
-                                    val requestMechRepository = RequestMechRepository()
-                                    val response = requestMechRepository.deleteRequest(blst._id!!)
-                                    if (response.success == true) {
-                                        withContext(Dispatchers.Main) {
-                                            lstbusiness.remove(blst)
-                                            notifyDataSetChanged()
-                                            Toast.makeText(
-                                                    context,
-                                                    "Business Deleted",
-                                                    Toast.LENGTH_SHORT
-                                            ).show()
-
-                                        }
-
-                                    }
-                                } catch (ex: Exception) {
-                                    withContext(Dispatchers.Main) {
-                                        Toast.makeText(
-                                                context,
-                                                ex.toString(),
-                                                Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-                            }
-
+                            lstbusiness.remove(blst)
+                            notifyDataSetChanged()
                         }
                     }
                 } catch (ex: java.lang.Exception) {
@@ -195,29 +142,15 @@ class ViewRequestAdapter (
                     }
                 }
             }
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val clientworkHistoryRepository=clientworkHistoryRepository()
-                    val response =  clientworkHistoryRepository.insertclientWork(clientWorkHistory)
-                    if(response.success == true){
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                context,
-                                "Added to client", Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                } catch (ex: java.lang.Exception) {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context,
-                            ex.toString(), Toast.LENGTH_SHORT
-                        ).show()
-                    }
+
+            if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
+                PushNotification(
+                    NotificationData(title, message),
+                    recipientToken
+                ).also {
+                    sendNotification(it)
                 }
             }
-            lstbusiness.remove(blst)
-            notifyDataSetChanged()
-
         }
 
         holder.btnupdatemap.setOnClickListener {
@@ -266,7 +199,8 @@ class ViewRequestAdapter (
                                     context,
                                     "Canceled", Toast.LENGTH_SHORT
                             ).show()
-
+                            lstbusiness.remove(blst)
+                            notifyDataSetChanged()
                         }
                     }
                 } catch (ex: java.lang.Exception) {
@@ -277,8 +211,7 @@ class ViewRequestAdapter (
                     }
                 }
             }
-            lstbusiness.remove(blst)
-            notifyDataSetChanged()
+
 
         }
 

@@ -2,15 +2,12 @@ package com.example.sawariapatkalinsewa.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.text.isDigitsOnly
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.sawariapatkalinsewa.R
@@ -21,12 +18,10 @@ import com.example.sawariapatkalinsewa.repository.MechanicRepository
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.wajahatkarim3.easyvalidation.core.view_ktx.textEqualTo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.regex.Pattern
 
 @Suppress("IMPLICIT_BOXING_IN_IDENTITY_EQUALS")
 class   SignupTabFragment: Fragment() {
@@ -38,10 +33,10 @@ class   SignupTabFragment: Fragment() {
     lateinit var rbmechanic:RadioButton
     lateinit var spinner: Spinner
     lateinit var mechaddress:TextInputLayout
-    lateinit var mechcontact:TextInputEditText
-    lateinit var mechcitizenship:TextInputEditText
-    lateinit var mechshop:TextInputEditText
-    lateinit var mechpan:TextInputEditText
+    lateinit var mechcontact:TextInputLayout
+    lateinit var mechcitizenship:TextInputLayout
+    lateinit var mechshop:TextInputLayout
+    lateinit var mechpan:TextInputLayout
     lateinit var radioGroup: RadioGroup
 
     //both consumer and mechanic consits this
@@ -88,51 +83,6 @@ class   SignupTabFragment: Fragment() {
         mechshop.visibility=View.GONE
         mechpan.visibility=View.GONE
 
-        clemail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (android.util.Patterns.EMAIL_ADDRESS.matcher(clemail.text.toString()).matches()){
-                    btnSignup.isEnabled=true
-                }
-                else{
-                    btnSignup.isEnabled=false
-                    clemail.setError("Invalid Email")
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-        mechcontact.addTextChangedListener(object :TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-               if (mobileValidate(mechcontact.text.toString()))
-               {
-                   btnSignup.isEnabled=true
-               }
-               else{
-                   btnSignup.isEnabled=false
-                   mechcontact.setError("Invalid Phone")
-               }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-        })
-
-
-
-
         radioGroup.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
                 when (checkedId) {
@@ -164,48 +114,20 @@ class   SignupTabFragment: Fragment() {
 
         btnSignup.setOnClickListener {
            if (sel=="Customer"){
-               val clfnme=clfname.text.toString()
-               val clname=cllname.text.toString()
+               val clfname=clfname.text.toString()
+               val cllname=cllname.text.toString()
                val clemail=clemail.text.toString()
-               val clusernme=clusername.text.toString()
+               val clusername=clusername.text.toString()
                val clpassword=clpass.text.toString()
                val confpassword=confirmpassword.text.toString()
-if (clfnme.isEmpty()){
-    clfname.error= "Firstname required"
-    return@setOnClickListener
-}
-else if (!clfname.text.toString().matches("^[a-zA-Z]*$".toRegex())|| clfnme.isDigitsOnly()){
-    clfname.error= "Invalid Only alphabets"
-    return@setOnClickListener
 
-               }
-            else   if (clname.isEmpty()){
-                   cllname.error= "Lastname required"
-                   return@setOnClickListener
-               }
-               else if (!cllname.text.toString().matches("^[a-zA-Z]*$".toRegex())|| clfnme.isDigitsOnly()){
-                   cllname.error= "Invalid Only alphabets"
-                   return@setOnClickListener
-
-               }
-else   if (clusernme.isEmpty()){
-    clusername.error= "Username required"
-    return@setOnClickListener
-}
-else if (clfnme.isDigitsOnly()){
-    clusername.error= "Invalid only Digits not acceptable"
-    return@setOnClickListener
-}    else   if (clpassword.isEmpty()||confpassword.isEmpty()){
-    clpass.error= "Password required"
-    return@setOnClickListener
-}
-              else if (clpassword!=confpassword){
+               if (clpassword!=confpassword){
                    clpass.error = "Password doesnot match"
                    clpass.requestFocus()
                    return@setOnClickListener
                }
                else{
-                   val client=client(clfname=clfnme,cllname = clname,clemail = clemail,clusername = clusernme,clpassword = clpassword)
+                   val client=client(clfname=clfname,cllname = cllname,clemail = clemail,clusername = clusername,clpassword = clpassword)
 
                        CoroutineScope(Dispatchers.IO).launch {
                            try {
@@ -238,83 +160,13 @@ else if (clfnme.isDigitsOnly()){
                 val mechemail = clemail.text.toString()
                 val mechusername = clusername.text.toString()
                 val mechvechtype =spinner.selectedItem.toString()
-                val mechaddres= mechaddress.editText?.text.toString()
-                val mechPhone= mechcontact.text.toString()
-                val mechcitizen=mechcitizenship.text.toString()
-                val mechworkplace=mechshop.text.toString()
-                val mechPANnum=mechpan.text.toString()
+                val mechaddress= mechaddress.editText?.text.toString()
+                val mechPhone= mechcontact.editText?.text.toString()
+                val mechcitizenship=mechcitizenship.editText?.text.toString()
+                val mechworkplace=mechshop.editText?.text.toString()
+                val mechPANnum=mechpan.editText?.text.toString()
                 val mechpassword = clpass.text.toString()
                 val mechpass = confirmpassword.text.toString()
-               if (mechfname.isEmpty()){
-                   clfname.error= "Firstname required"
-                   return@setOnClickListener
-               }
-               else if (!clfname.text.toString().matches("^[a-zA-Z]*$".toRegex())|| mechfname.isDigitsOnly()){
-                   clfname.error= "Invalid Only alphabets"
-                   return@setOnClickListener
-
-               }
-               else   if (mechlname.isEmpty()){
-                   cllname.error= "Lastname required"
-                   return@setOnClickListener
-               }
-               else if (!cllname.text.toString().matches("^[a-zA-Z]*$".toRegex())|| mechlname.isDigitsOnly()){
-                   cllname.error= "Invalid Only alphabets"
-                   return@setOnClickListener
-
-               }
-               else   if (mechusername.isEmpty()){
-                   clusername.error= "Username required"
-                   return@setOnClickListener
-               }
-               else if (mechusername.isDigitsOnly()){
-                   clusername.error= "Invalid only Digits not acceptable"
-                   return@setOnClickListener
-               }
-               else   if (mechaddres.isEmpty()){
-                   mechaddress.error= "Address required"
-                   return@setOnClickListener
-               }
-               else if (!mechaddress.editText?.text.toString().matches("^[a-zA-Z]*$".toRegex())|| mechaddres.isDigitsOnly()){
-                   mechaddress.error= "Invalid Only alphabets"
-                   return@setOnClickListener
-
-               }
-               else   if (mechPhone.isEmpty()){
-                   mechcontact.error= "Contact required"
-                   return@setOnClickListener
-               }
-               else   if (mechworkplace.isEmpty()){
-                   mechshop.error= "ShopName required"
-                   return@setOnClickListener
-               }
-               else if (!mechshop.text.toString().matches("^[a-zA-Z]*$".toRegex())|| mechaddres.isDigitsOnly()){
-                   mechshop.error= "Invalid Only alphabets"
-                   return@setOnClickListener
-
-               }
-               else   if (mechPANnum.isEmpty()){
-                   mechpan.error= "Address required"
-                   return@setOnClickListener
-               }
-               else if (!mechPANnum.isDigitsOnly()){
-                   mechpan.error= "Invalid Only digits"
-                   return@setOnClickListener
-
-               }
-               else   if (mechcitizen.isEmpty()){
-                   mechcitizenship.error= "CitizenShip required"
-                   return@setOnClickListener
-               }
-               else if (!mechcitizen.isDigitsOnly()){
-                   mechcitizenship.error= "Invalid Only digits"
-                   return@setOnClickListener
-
-               }
-               else   if (mechpassword.isEmpty()||mechpass.isEmpty()){
-                   clpass.error= "Password required"
-                   return@setOnClickListener
-               }
 
                 if (mechpassword != mechpass) {
                     clpass.error = "Password doesnot match"
@@ -323,7 +175,7 @@ else if (clfnme.isDigitsOnly()){
                 } else {
                     val mechanic =
                             Mechanic(mechfname = mechfname, mechlname = mechlname, mechemail = mechemail, mechusername = mechusername,
-                                    mechvechtype=mechvechtype,mechaddress=mechaddres,mechPhone=mechPhone,mechcitizenship=mechcitizen,
+                                    mechvechtype=mechvechtype,mechaddress=mechaddress,mechPhone=mechPhone,mechcitizenship=mechcitizenship,
                                     mechworkplace=mechworkplace,mechPANnum=mechPANnum,
                                     mechpassword = mechpassword)
 
@@ -357,12 +209,6 @@ else if (clfnme.isDigitsOnly()){
         }
             return view;
 
-    }
-
-    private fun mobileValidate(text: String): Boolean {
- val p=Pattern.compile("[0-9][0-9]{9}")
-        var m =p.matcher(text)
-        return m.matches()
     }
 
 //    private fun showHighPriorityNotification() {
