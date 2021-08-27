@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -26,9 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SawariApatkalinSewa"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Mechanicui.MechWorkHistoryActivity"></activity>
+        <activity android:name=".Mechanicui.CustomerMapActivity" />
+        <activity android:name=".Mechanicui.MechWorkActivity" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_android_black_24dp" />
+
         <service
             android:name=".channel.FirebaseService"
             android:exported="false">
@@ -36,7 +42,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".Mechanicui.ViewRequestActivity"></activity>
+
+        <activity android:name=".Mechanicui.ViewRequestActivity" />
         <activity android:name=".Customerui.AddRequestActivity" />
         <activity android:name=".Customerui.VehicleActivity" />
         <activity android:name=".Mechanicui.ViewFeedBackActivity" />
@@ -52,10 +59,9 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-<!--        <meta-data-->
-<!--            android:name="com.google.android.geo.API_KEY"-->
-<!--            android:value="@string/google_maps_key" />-->
-
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.geo.API_KEY" -->
+        <!-- android:value="@string/google_maps_key" /> -->
         <activity
             android:name=".Mechanicui.MechanicMapActivity"
             android:label="@string/title_activity_mechanic_map" />

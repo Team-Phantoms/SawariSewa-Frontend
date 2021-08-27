@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SawariApatkalinSewa.iml" filepath="$PROJECT_DIR$/.idea/modules/SawariApatkalinSewa.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SawariApatkalinSewa.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SawariApatkalinSewa.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/saswear/SawariApatkalinSewa.saswear.iml" filepath="$PROJECT_DIR$/.idea/modules/saswear/SawariApatkalinSewa.saswear.iml" />
     </modules>
   </component>
 </project>

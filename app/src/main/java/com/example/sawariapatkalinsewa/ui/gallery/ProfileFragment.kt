@@ -39,7 +39,6 @@ import java.util.*
 
 class ProfileFragment: Fragment(), View.OnClickListener {
     private lateinit var tv_name:TextView
-    private lateinit var tv_address:EditText
     private lateinit var tv_phone:EditText
     private lateinit var tv_email:TextView
     private lateinit var tv_caddres:TextView
@@ -61,8 +60,6 @@ class ProfileFragment: Fragment(), View.OnClickListener {
 
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         tv_name=root.findViewById(R.id.tv_name)
-        tv_address=root.findViewById(R.id.tv_address)
-        tv_caddres=root.findViewById(R.id.tv_caddres)
         tv_phone=root.findViewById(R.id.tv_phone)
         tv_email=root.findViewById(R.id.tv_email)
         tv_email2=root.findViewById(R.id.tv_email2)
@@ -106,6 +103,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
                             Log.d("Debug:", "Your data:" + listprofile[0])
                             tv_name.text=listprofile[0].clusername
                             tv_email.text=listprofile[0].clemail
+                          tv_email2.setText(listprofile[0].clemail)
                             tv_fname.setText("${listprofile[0].clfname}")
                             tv_lname.setText("${listprofile[0].cllname}")
 
@@ -138,6 +136,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
                             Log.d("Debug:", "Your data:" + listprofile[0])
                             tv_name.text=listprofile[0].mechusername
                             tv_email.text=listprofile[0].mechemail
+                            tv_email2.setText(listprofile[0].mechemail)
                             tv_fname.setText("${listprofile[0].mechfname}")
                             tv_lname.setText("${listprofile[0].mechlname}")
 
@@ -271,7 +270,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+
     }
 
 }

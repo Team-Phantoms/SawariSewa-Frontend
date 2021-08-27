@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 
 
 data class Request (
+        var _id:String?=null,
     var problemtype:String?=null,
     var vechbrand: String? = null,
     var vechmodel: String? = null,
@@ -15,7 +16,9 @@ data class Request (
     var lat:String?=null,
     var long:String?=null,
     var token:String?=null,
-    var clusername: String? = null)
+    var clusername: String? = null,
+    var contact: String? = null
+)
     :Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -26,10 +29,14 @@ data class Request (
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(_id)
         parcel.writeString(problemtype)
         parcel.writeString(vechbrand)
         parcel.writeString(vechmodel)
@@ -39,6 +46,7 @@ data class Request (
         parcel.writeString(long)
         parcel.writeString(token)
         parcel.writeString(clusername)
+        parcel.writeString(contact)
     }
 
     override fun describeContents(): Int {
