@@ -32,6 +32,7 @@ private lateinit var cvjumpstart:CardView
 private lateinit var cvlockedout:CardView
 private lateinit var cvaccident:CardView
 private lateinit var cvfuel:CardView
+private lateinit var cvSome:CardView
 lateinit var username:TextView
  var problem=""
     lateinit var sensorManager: SensorManager
@@ -57,6 +58,7 @@ lateinit var username:TextView
         slview=root.findViewById(R.id.linearLayout)
         slview2=root.findViewById(R.id.linearLayout2)
         slview3=root.findViewById(R.id.line1)
+        cvSome=root.findViewById(R.id.cvSome)
 
         cvflatetire.setOnClickListener(this)
         cvbreakdown.setOnClickListener(this)
@@ -64,6 +66,7 @@ lateinit var username:TextView
         cvlockedout.setOnClickListener(this)
         cvaccident.setOnClickListener(this)
         cvfuel.setOnClickListener(this)
+        cvSome.setOnClickListener(this)
 
         username.text="Welcome ${ServiceBuilder.username}"
 
@@ -111,6 +114,10 @@ lateinit var username:TextView
             }
             R.id.cvfuel -> {
                 problem="Fuel Out"
+                senddata()
+            }
+            R.id.cvSome ->{
+                problem=""
                 senddata()
             }
         }
