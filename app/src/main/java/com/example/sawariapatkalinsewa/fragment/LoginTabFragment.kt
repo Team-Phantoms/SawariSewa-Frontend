@@ -11,6 +11,8 @@ import android.os.Bundle
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +33,9 @@ import com.example.sawariapatkalinsewa.repository.MechanicRepository
 import com.google.android.material.snackbar.Snackbar
 
 import com.google.android.material.textfield.TextInputEditText
+import com.wajahatkarim3.easyvalidation.core.collection_ktx.nonEmptyList
+import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
+import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,12 +47,12 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.NoSuchPaddingException
 import javax.crypto.SecretKey
+import javax.xml.validation.Validator
 
 class LoginTabFragment : Fragment() {
     lateinit var cluser:TextInputEditText;
     lateinit var clpass:TextInputEditText;
     lateinit var forgetpass:TextView;
-    lateinit var signup:TextView;
     lateinit var login:Button;
     lateinit var finger:ImageView
     lateinit var rdocustomer:RadioButton;
@@ -74,12 +79,15 @@ class LoginTabFragment : Fragment() {
         clpass=view.findViewById(R.id.password)
         forgetpass=view.findViewById(R.id.Forgetpassword)
         login=view.findViewById(R.id.buttonlogin)
-        signup=view.findViewById(R.id.Signupacc)
+
         rdocustomer=view.findViewById(R.id.rdocustomer)
         rdomechanic=view.findViewById(R.id.rdomechanic)
         finger=view.findViewById(R.id.finger)
 
+
+
        login.setOnClickListener(object : View.OnClickListener {
+
            override fun onClick(view: View) {
                when {
                    rdocustomer.isChecked -> {
@@ -242,6 +250,12 @@ class LoginTabFragment : Fragment() {
     private fun login() {
         val clusername=cluser.text.toString()
         val clpassword= clpass.text.toString()
+if (clusername.isEmpty()){
+    cluser.error= "Username Required"
+}
+        if (clpassword.isEmpty()){
+            clpass.error= "Password Required"
+        }
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
                 val repository = CustomerRepository()
@@ -290,6 +304,12 @@ class LoginTabFragment : Fragment() {
     private fun mechlogin() {
         val mechusername=cluser.text.toString()
         val mechpassword= clpass.text.toString()
+        if (mechusername.isEmpty()){
+            cluser.error= "Username Required"
+        }
+        if (mechpassword.isEmpty()){
+            clpass.error= "Password Required"
+        }
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val repository = MechanicRepository()

@@ -1,6 +1,5 @@
 package com.example.sawariapatkalinsewa.repository
 
-import android.content.Context
 import com.example.sawariapatkalinsewa.api.CustomerAPI
 import com.example.sawariapatkalinsewa.api.MyApiRequest
 import com.example.sawariapatkalinsewa.api.ServiceBuilder

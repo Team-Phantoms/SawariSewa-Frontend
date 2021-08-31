@@ -100,11 +100,13 @@ class AddvehicleFragment : Fragment(),View.OnClickListener {
 
     private fun savevehicle() {
         val clusername=vusername.text.toString()
-        val vechbrand = vechbrand.text.toString()
-        val vechmodel = vechmodel.text.toString()
-        val vechplatenum = platenum.text.toString()
-
-        val vehicle=Vehicle(vechbrand = vechbrand,vechmodel=vechmodel,vechplatenum = vechplatenum,clusername=clusername)
+        val vecbrand = vechbrand.text.toString()
+        val vecmodel = vechmodel.text.toString()
+        val vecplatenum = platenum.text.toString()
+        if (vecbrand.isEmpty()){
+            vechbrand.error= "Brand required"
+        }
+        val vehicle=Vehicle(vechbrand = vecbrand,vechmodel=vecmodel,vechplatenum = vecplatenum,clusername=clusername)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val vehicleRepository = VehicleRepository()

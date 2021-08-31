@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class workHistory  (
+        var _id :String?=null,
         var problemtype:String?=null,
         var address: String? = null,
         var lat:String?=null,
@@ -14,6 +15,7 @@ data class workHistory  (
         var mechphone:String?=null,
         var accepted:String?=null,
         var rejected:String?=null,
+        var contact:String?=null,
 ):Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -25,10 +27,14 @@ data class workHistory  (
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(_id)
         parcel.writeString(problemtype)
         parcel.writeString(address)
         parcel.writeString(lat)
@@ -39,6 +45,7 @@ data class workHistory  (
         parcel.writeString(mechphone)
         parcel.writeString(accepted)
         parcel.writeString(rejected)
+        parcel.writeString(contact)
     }
 
     override fun describeContents(): Int {

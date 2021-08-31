@@ -2,14 +2,12 @@ package com.example.sawariapatkalinsewa.repository
 
 import android.content.Context
 import com.example.sawariapatkalinsewa.api.BusinessAPI
-import com.example.sawariapatkalinsewa.api.CustomerAPI
 import com.example.sawariapatkalinsewa.api.MyApiRequest
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
 import com.example.sawariapatkalinsewa.db.customerDB
 import com.example.sawariapatkalinsewa.entity.Business
 import com.example.sawariapatkalinsewa.response.AddBusinessResponse
 import com.example.sawariapatkalinsewa.response.DeleteBusinessResponse
-import com.example.sawariapatkalinsewa.response.LoginResponse
 
 class BusinessRepository: MyApiRequest(){
     private val businesAPI = ServiceBuilder.buildService(BusinessAPI::class.java)

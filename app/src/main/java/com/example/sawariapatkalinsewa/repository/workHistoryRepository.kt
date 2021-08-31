@@ -2,10 +2,8 @@ package com.example.sawariapatkalinsewa.repository
 
 import com.example.sawariapatkalinsewa.api.MyApiRequest
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
-import com.example.sawariapatkalinsewa.entity.Request
 import com.example.sawariapatkalinsewa.entity.workHistory
-import com.example.sawariapatkalinsewa.response.RequestMechResponse
-import com.example.sawariapatkalinsewa.response.ViewRequestResponse
+import com.example.sawariapatkalinsewa.response.DeleteBusinessResponse
 import com.example.sawariapatkalinsewa.response.workHistoryResponse
 
 class workHistoryRepository:MyApiRequest() {
@@ -20,13 +18,6 @@ class workHistoryRepository:MyApiRequest() {
         }
     }
 
-    suspend fun getDriver(): workHistoryResponse {
-        return apiRequest {
-            workHistoryAPI.getDriver(
-                    ServiceBuilder.token!!
-            )
-        }
-    }
 
     suspend fun getWork(): workHistoryResponse {
         return apiRequest {
@@ -35,4 +26,13 @@ class workHistoryRepository:MyApiRequest() {
             )
         }
     }
+    suspend fun deleteRequest(id :String): DeleteBusinessResponse {
+        return apiRequest {
+            workHistoryAPI.deleteReq(
+                id
+            )
+        }
+    }
+
+
 }

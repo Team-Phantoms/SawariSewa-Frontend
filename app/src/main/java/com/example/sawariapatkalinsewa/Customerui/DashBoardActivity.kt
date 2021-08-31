@@ -1,11 +1,17 @@
 package com.example.sawariapatkalinsewa.Customerui
 
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -28,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.jar.Manifest
 
 class DashBoardActivity : AppCompatActivity() {
 
@@ -68,8 +75,38 @@ class DashBoardActivity : AppCompatActivity() {
       setupActionBarWithNavController(navController, appBarConfiguration)
 
         navView.setupWithNavController(navController)
+
+        if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.RECEIVE_SMS)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECEIVE_SMS,android.Manifest.permission.SEND_SMS),111)
+        }
+        else{
+            receiveMsg()
+        }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode==111 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            receiveMsg()
+        }
+    }
+
+    private fun receiveMsg() {
+        var br = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
+                   for (sms in  Telephony.Sms.Intents.getMessagesFromIntent(intent)){
+                       Toast.makeText(applicationContext,sms.displayMessageBody,Toast.LENGTH_LONG).show()
+
+                   }                }
+            }
+        }
+        registerReceiver(br, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
+    }
 
 
     private fun logOut(){

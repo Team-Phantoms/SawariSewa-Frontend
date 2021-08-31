@@ -5,7 +5,6 @@ import com.example.sawariapatkalinsewa.api.MechanicAPI
 import com.example.sawariapatkalinsewa.api.MyApiRequest
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
 import com.example.sawariapatkalinsewa.entity.Mechanic
-import com.example.sawariapatkalinsewa.entity.client
 import com.example.sawariapatkalinsewa.response.GetClientResponse
 import com.example.sawariapatkalinsewa.response.LoginResponse
 import com.example.sawariapatkalinsewa.response.ViewRequestResponse

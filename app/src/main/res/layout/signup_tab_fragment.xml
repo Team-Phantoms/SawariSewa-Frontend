@@ -96,11 +96,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:id="@+id/mechcontact"
             android:hint="Contact"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mechcontact"
                 android:layout_width="match_parent"
+                android:inputType="phone"
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -108,11 +109,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:id="@+id/mechcitizenship"
+
             android:hint="Citizenship_No"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
-
+                android:id="@+id/mechcitizenship"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
@@ -121,12 +122,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:id="@+id/mechshop"
-            android:hint="ShopName(optional)"
+
+            android:hint="ShopName"
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
-
+                android:id="@+id/mechshop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
@@ -134,13 +135,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mechpannum"
+
             android:layout_marginTop="2dp"
-            android:hint="PAN_No(optional)"
+            android:hint="PAN_No"
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
-
+                android:id="@+id/mechpannum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
@@ -184,14 +185,7 @@
 
         />
 
-    <TextView
-        android:id="@+id/haveanaccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Have an Account?"
-        android:textSize="20dp"
-        android:layout_gravity="end"
-        />
+
 
     </LinearLayout>
 

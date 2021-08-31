@@ -18,16 +18,15 @@ class SawarApatkalinSewaTest {
     @Test
     fun checkLogin()= runBlocking {
         customerRepository= CustomerRepository()
-        val response=customerRepository.loginUser("mansur","12345")
+        val response=customerRepository.loginUser("mansur12","12345")
         val expectedResult= true
         val actualResult=response.success
         Assert.assertEquals(expectedResult,actualResult)
     }
-
     @Test
     fun insertUser()= runBlocking {
         val mechanic =
-            Mechanic(mechfname = "kishan", mechlname = "kumar", mechemail = "ttt", mechusername = "kishan",
+            Mechanic(mechfname = "ram", mechlname = "shyam", mechemail = "hari", mechusername = "kisn",
                 mechvechtype="Two Wheelers",mechaddress="Bhaktapur",mechPhone="98415255",mechcitizenship="2555",
                 mechworkplace="Kathmandu",mechPANnum="8888",
                 mechpassword = "123456")
@@ -43,9 +42,9 @@ class SawarApatkalinSewaTest {
         customerRepository= CustomerRepository()
         vehicleRepository= VehicleRepository()
         val vehicle=
-            Vehicle(vechbrand = "vechbrand",vechmodel="vechmodel",vechplatenum = "vechplatenum",clusername="mansur")
-        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur","12345").token
-        ServiceBuilder.username=customerRepository.loginUser("mansur","12345").data
+            Vehicle(vechbrand = " ",vechmodel="vechmodel",vechplatenum = "vechplatenum",clusername="mansur")
+        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur12","12345").token
+        ServiceBuilder.username=customerRepository.loginUser("mansur12","12345").data
         val response=vehicleRepository.insertvehicle(vehicle)
         val expectedResult= true
         val actualResult=response.success
@@ -56,8 +55,8 @@ class SawarApatkalinSewaTest {
     @Test
     fun getClient()= runBlocking {
         customerRepository= CustomerRepository()
-        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur","12345").token
-        ServiceBuilder.username=customerRepository.loginUser("mansur","12345").data
+        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur12","12345").token
+        ServiceBuilder.username=customerRepository.loginUser("mansur12","12345").data
         val response=customerRepository.getcustomer()
         val expectedResult= true
         val actualResult=response.success
@@ -74,8 +73,8 @@ class SawarApatkalinSewaTest {
             mechusername="mechusername",
             message="message",
         )
-        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur","12345").token
-        ServiceBuilder.username=customerRepository.loginUser("mansur","12345").data
+        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur12","12345").token
+        ServiceBuilder.username=customerRepository.loginUser("mansur12","12345").data
         val response=feedBackRepository.postfeedback(feedback)
         val expectedResult= true
         val actualResult=response.success
@@ -98,7 +97,7 @@ class SawarApatkalinSewaTest {
 
 
         )
-        ServiceBuilder.token="Bearer " +mechanicRepository.loginMech("Hsisisj","12345").token
+        ServiceBuilder.token="Bearer " +mechanicRepository.loginMech("tttt","12345").token
         val response=businessRepository.registerBusiness(business)
         val expectedResult= true
         val actualResult=response.success
@@ -122,8 +121,8 @@ class SawarApatkalinSewaTest {
 
 
         )
-        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur","12345").token
-        ServiceBuilder.username=customerRepository.loginUser("mansur","12345").data
+        ServiceBuilder.token="Bearer " +customerRepository.loginUser("mansur12","12345").token
+        ServiceBuilder.username=customerRepository.loginUser("mansur12","12345").data
         val response=requestMechRepository.requestMech(request)
         val expectedResult= true
         val actualResult=response.success

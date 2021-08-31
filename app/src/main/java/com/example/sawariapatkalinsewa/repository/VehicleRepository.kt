@@ -1,12 +1,8 @@
 package com.example.sawariapatkalinsewa.repository
 
-import android.content.Context
-
 import com.example.sawariapatkalinsewa.api.MyApiRequest
 import com.example.sawariapatkalinsewa.api.ServiceBuilder
 import com.example.sawariapatkalinsewa.api.VehicleAPI
-import com.example.sawariapatkalinsewa.db.customerDB
-import com.example.sawariapatkalinsewa.entity.Feedback
 import com.example.sawariapatkalinsewa.entity.Vehicle
 import com.example.sawariapatkalinsewa.response.GetVehicleResponse
 import com.example.sawariapatkalinsewa.response.VehicleResponse
