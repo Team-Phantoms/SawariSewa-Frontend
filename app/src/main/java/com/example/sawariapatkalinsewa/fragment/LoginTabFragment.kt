@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.sawariapatkalinsewa.Customerui.DashBoardActivity
 import com.example.sawariapatkalinsewa.FingerprintHandler
+import com.example.sawariapatkalinsewa.ForgetPasswordActivity
+import com.example.sawariapatkalinsewa.Mechanicui.AddBusinessActivity
 import com.example.sawariapatkalinsewa.Mechanicui.MechDashboardActivity
 import com.example.sawariapatkalinsewa.R
 
@@ -92,11 +94,14 @@ class LoginTabFragment : Fragment() {
                    }
 
                }
-
-
-
            }
        })
+        forgetpass.setOnClickListener {
+            Intent(
+                context, ForgetPasswordActivity::class.java
+            )
+        }
+
         finger.setOnClickListener{
             Toast.makeText(context, "Click on fingerprint sensor of your mobile", Toast.LENGTH_SHORT).show()
             if (getManagers()) {
